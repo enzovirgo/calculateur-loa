@@ -1,23 +1,18 @@
-def calculate_interest_rate(PV, D, L, VR, n, L1):
-    numerator = 12 * (L * n + VR - PV + D)
-    denominator = (PV - D + L1 - VR) * n
-    interest_rate = (numerator / denominator) * 100
-    return interest_rate
+function calculateInterestRate(PV, D, L, VR, n, L1) {
+    var numerator = 12 * (L * n + VR - PV + D);
+    var denominator = (PV - D + L1 - VR) * n;
+    var interestRate = (numerator / denominator) * 100;
+    return interestRate;
+}
 
-# Prix de vente du bien
-PV = float(input("Entrez le prix de vente du bien : "))
-# Dépôt initial
-D = float(input("Entrez le dépôt initial : "))
-# Montant du premier loyer majoré
-L1 = float(input("Entrez le montant du premier loyer majoré : "))
-# Loyer mensuel
-L = float(input("Entrez le loyer mensuel : "))
-# Valeur résiduelle
-VR = float(input("Entrez la valeur résiduelle : "))
-# Durée de la location en mois
-n = int(input("Entrez la durée de la location en mois : "))
+function calculateAndDisplayInterestRate() {
+    var PV = parseFloat(document.getElementById("PV").value);
+    var D = parseFloat(document.getElementById("D").value);
+    var L1 = parseFloat(document.getElementById("L1").value);
+    var L = parseFloat(document.getElementById("L").value);
+    var VR = parseFloat(document.getElementById("VR").value);
+    var n = parseInt(document.getElementById("n").value);
 
-# Calcul du taux d'intérêt annuel
-interest_rate = calculate_interest_rate(PV, D, L, VR, n, L1)
-
-print("Le taux d'intérêt annuel est de :", interest_rate, "%")
+    var interestRate = calculateInterestRate(PV, D, L, VR, n, L1);
+    document.getElementById("result").innerHTML = "Le taux d'intérêt annuel est de : " + interestRate.toFixed(2) + "%";
+}
