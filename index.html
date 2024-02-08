@@ -10,22 +10,27 @@
     <form id="loaForm">
         <label for="PV">Prix de vente du bien :</label>
         <input type="number" id="PV" required><br>
+
         <label for="D">Dépôt initial :</label>
         <input type="number" id="D" required><br>
+
         <label for="L1">Montant du premier loyer majoré :</label>
         <input type="number" id="L1" required><br>
+
         <label for="L">Loyer mensuel :</label>
         <input type="number" id="L" required><br>
+
         <label for="VR">Valeur résiduelle :</label>
         <input type="number" id="VR" required><br>
+
         <label for="n">Durée de la location en mois :</label>
         <input type="number" id="n" required><br>
 
-        <button type="button" onclick="calculateInterestRate()">Calculer le taux d'intérêt annuel</button>
         <button type="button" onclick="calculateAndDisplayInterestRate()">Calculer le taux d'intérêt annuel</button>
     </form>
 
     <div id="result"></div>
+
     <script src="script.js"></script>
 </body>
 </html>
