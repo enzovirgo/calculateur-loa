@@ -102,8 +102,8 @@ function calculateAnnualInterestRate(Pv, Vr, L, n) {
   }
 
   function df(r) {
-    return (Math.pow(1 + r, n) * (1 + n * r - r) + Vr - L * (n * Math.pow(1 + r, n - 1) * Pv * (1 + r - r) + Pv * (Math.pow(1 + r, n) - 1))) / (r * r * Pv * Pv);
-  }
+  return ((Math.pow(1 + r, n) * (1 + n * r - r)) + Vr - (n * L * Math.pow(1 + r, n - 1)) - L * (Math.pow(1 + r, n) - 1)) / (Pv * (Math.pow(1 + r, n) - 1));
+}
 
   let rGuess = (2 * (n * L - Pv + Vr)) / (n * (Pv + Vr));
   rGuess /= 100; // Convertir en décimal
