@@ -3,6 +3,68 @@
 <head>
 <meta charset="UTF-8">
 <title>Calculateur de taux d'intérêt</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+  }
+
+  h2 {
+    color: #444;
+  }
+
+  form {
+    background-color: #fff;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+
+  form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  form input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-sizing: border-box; /* Makes sure padding doesn't affect overall width */
+  }
+
+  form input[type="submit"] {
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  form input[type="submit"]:hover {
+    background-color: #4cae4c;
+  }
+
+  #result {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #dff0d8;
+    color: #3c763d;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #d6e9c6;
+  }
+</style>
 <script>
 // Assurez-vous que ce script est inclus en entier sans erreurs
 function calculateAnnualInterestRate(Pv, Vr, L, n) {
