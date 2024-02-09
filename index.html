@@ -98,18 +98,16 @@ function calculateAnnualInterestRate(Pv, Vr, L, n) {
   }
 
   function f(r) {
-  return (Pv - Vr) * r - L * (1 - Math.pow(1 + r, -n));
-}
+    return (Pv - Vr) * r - L * (1 - Math.pow(1 + r, -n));
+  }
 
   function df(r) {
-  return ((Math.pow(1 + r, n) * (1 + n * r - r)) + Vr - (n * L * Math.pow(1 + r, n - 1)) - L * (Math.pow(1 + r, n) - 1)) / (Pv * (Math.pow(1 + r, n) - 1));
-}
+    return ((Pv - Vr) + n * L * Math.pow(1 + r, -n - 1)) / (Pv * Math.pow(1 + r, -n));
+  }
 
   let rGuess = 0.05; // Commencer avec un taux d'intérêt initial de 5%
-  rGuess /= 100; // Convertir en décimal
 
   let rMonthly = newtonRaphson(f, df, rGuess);
-  // Correction ici pour s'assurer que c'est le taux annuel qui est calculé et affiché
   let rAnnual = rMonthly * 12 * 100;
 
   return rAnnual;
