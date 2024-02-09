@@ -102,8 +102,8 @@ function calculateAnnualInterestRate(Pv, Vr, L, n) {
   }
 
   function df(r) {
-    return ((Pv - Vr) + n * L * Math.pow(1 + r, -n - 1)) / (Pv * Math.pow(1 + r, -n));
-  }
+  return (Pv * n * Math.pow(1 + r, n - 1) + Pv * (Math.pow(1 + r, n) - 1) - L * n * Math.pow(1 + r, n - 1)) / (Pv * Pv * (Math.pow(1 + r, n) - 1));
+}
 
   let rGuess = 0.05; // Commencer avec un taux d'intérêt initial de 5%
 
