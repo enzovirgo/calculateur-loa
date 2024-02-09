@@ -110,7 +110,7 @@ function calculateAnnualInterestRate(Pv, Vr, L, n) {
 
   let rMonthly = newtonRaphson(f, df, rGuess);
   // Correction ici pour s'assurer que c'est le taux annuel qui est calculé et affiché
-  let rAnnual = (Math.pow(1 + rMonthly, 12) - 1) * 100;
+  let rAnnual = rMonthly * 12 * 100;
 
   return rAnnual;
 }
