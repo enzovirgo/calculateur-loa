@@ -11,11 +11,9 @@
     padding: 20px;
     color: #333;
   }
-
   h2 {
     color: #444;
   }
-
   form {
     background-color: #fff;
     max-width: 400px;
@@ -24,22 +22,19 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
   }
-
   form label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
   }
-
   form input[type="number"] {
     width: 100%;
     padding: 8px;
     margin-bottom: 20px;
     border-radius: 4px;
     border: 1px solid #ddd;
-    box-sizing: border-box; /* Makes sure padding doesn't affect overall width */
+    box-sizing: border-box;
   }
-
   form input[type="submit"] {
     background-color: #5cb85c;
     color: white;
@@ -49,11 +44,9 @@
     cursor: pointer;
     font-size: 16px;
   }
-
   form input[type="submit"]:hover {
     background-color: #4cae4c;
   }
-
   #result {
     max-width: 400px;
     margin: 20px auto;
@@ -65,33 +58,6 @@
     border: 1px solid #d6e9c6;
   }
 </style>
-<script>
-// Assurez-vous que ce script est inclus en entier sans erreurs
-function calculateAnnualInterestRate(Pv, Vr, L, n) {
-  // Fonction pour calculer le taux d'intérêt mensuel en utilisant la méthode de Newton-Raphson
-  // ... (Inclure ici l'intégralité du code JavaScript de la fonction calculateAnnualInterestRate)
-}
-
-window.onload = function() {
-  // Assurez-vous que l'identifiant 'interestRateForm' correspond à celui de votre formulaire
-  const form = document.getElementById('interestRateForm');
-  form.onsubmit = function(event) {
-    event.preventDefault(); // Empêche le formulaire d'être soumis traditionnellement
-
-    // Récupérer les valeurs du formulaire
-    const Pv = Number(document.getElementById('Pv').value);
-    const Vr = Number(document.getElementById('Vr').value);
-    const L = Number(document.getElementById('L').value);
-    const n = Number(document.getElementById('n').value);
-
-    // Calculer le taux d'intérêt annuel
-    const annualInterestRate = calculateAnnualInterestRate(Pv, Vr, L, n);
-    
-    // Afficher le résultat
-    document.getElementById('result').textContent = `Le taux d'intérêt annuel est: ${annualInterestRate.toFixed(4)}%`;
-  }
-}
-</script>
 </head>
 <body>
 
@@ -108,12 +74,58 @@ window.onload = function() {
   <input type="number" id="L" name="L" required><br>
   
   <label for="n">Nombre de mois (n):</label><br>
-  <input type="number" id="n" name="n" required><br><br>
+  <input type="number" id="n" name="n" required><br>
   
   <input type="submit" value="Calculer">
 </form>
 
 <p id="result"></p>
 
+<script>
+function calculateAnnualInterestRate(Pv, Vr, L, n) {
+  function newtonRaphson(f, df, guess, maxIter = 100, tolerance = 1e-6) {
+    let r = guess;
+    for (let i = 0; i < maxIter; i++) {
+      let fValue = f(r);
+      let fDerivative = df(r);
+      let rNew = r - fValue / fDerivative;
+      if (Math.abs(rNew - r) < tolerance) {
+        return rNew;
+      }
+      r = rNew;
+    }
+    throw new Error('Failed to converge');
+  }
+
+  function f(r) {
+    return r * (Math.pow(1 + r, n)) - (Vr / Pv) - (L * (Math.pow(1 + r, n) - 1)) / (r * Pv);
+  }
+
+  function df(r) {
+    return (Math.pow(1 + r, n) * (1 + n * r - r) + Vr - L * (n * Math.pow(1 + r, n - 1) * Pv * (1 + r - r) + Pv * (Math.pow(1 + r, n) - 1))) / (r * r * Pv * Pv);
+  }
+
+  let rGuess = (2 * (n * L - Pv + Vr)) / (n * (Pv + Vr));
+  rGuess /= 100;
+
+  let rMonthly = newtonRaphson(f, df, rGuess);
+  let rAnnual = (Math.pow(1 + rMonthly, 12) - 1) * 100;
+
+  return rAnnual;
+}
+
+document.getElementById('interestRateForm').onsubmit = function(event) {
+  event.preventDefault();
+
+  const Pv = Number(document.getElementById('Pv').value);
+  const Vr = Number(document.getElementById('Vr').value);
+  const L = Number(document.getElementById('L').value);
+  const n = Number(document.getElementById('n').value);
+
+  const annualInterestRate = calculateAnnualInterestRate(Pv, Vr, L, n);
+  
+  document.getElementById('result').textContent = `Le taux d'intérêt annuel est: ${annualInterestRate.toFixed(4)}%`;
+}
+</script>
 </body>
 </html>
